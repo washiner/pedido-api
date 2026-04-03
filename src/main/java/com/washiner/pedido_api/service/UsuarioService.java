@@ -27,4 +27,9 @@ public class UsuarioService {
     public List<Usuario> listar() {
         return usuarioRepository.findAll();
     }
+
+    public Usuario buscarPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
 }
