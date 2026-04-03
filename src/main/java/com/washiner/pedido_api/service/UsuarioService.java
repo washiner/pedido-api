@@ -16,6 +16,11 @@ public class UsuarioService {
     }
 
     public Usuario salvar(Usuario usuario) {
+
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new RuntimeException("Email já cadastrado");
+        }
+
         return usuarioRepository.save(usuario);
     }
 
