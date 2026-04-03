@@ -41,4 +41,21 @@ public class UsuarioService {
 
         usuarioRepository.deleteById(id);
     }
+
+    public Usuario atualizar(Long id, Usuario usuarioAtualizado) {
+
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        // verifica se o email foi alterado
+        if (!usuario.getEmail().equals(usuarioAtualizado.getEmail())
+                && usuarioRepository.existsByEmail(usuarioAtualizado.getEmail())) {
+            throw new RuntimeException("Email já cadastrado");
+        }
+
+        usuario.setNome(usuarioAtualizado.getNome());
+        usuario.setEmail(usuarioAtualizado.getEmail());
+
+        return usuarioRepository.save(usuario);
+    }
 }
